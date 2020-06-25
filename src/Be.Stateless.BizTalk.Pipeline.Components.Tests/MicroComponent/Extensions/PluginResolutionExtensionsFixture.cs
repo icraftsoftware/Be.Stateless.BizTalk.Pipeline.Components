@@ -33,17 +33,17 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		[Fact]
 		public void AsPluginReturnsInstance()
 		{
-			var type = typeof(ContextualMessageFactory);
+			var type = typeof(ContextualMessageBodyStreamFactory);
 
-			var resolvedPlugin = type.AsPlugin<IMessageFactory>();
+			var resolvedPlugin = type.AsPlugin<IMessageBodyStreamFactory>();
 
-			resolvedPlugin.Should().NotBeNull().And.BeAssignableTo<IMessageFactory>();
+			resolvedPlugin.Should().NotBeNull().And.BeAssignableTo<IMessageBodyStreamFactory>();
 		}
 
 		[Fact]
 		public void AsPluginReturnsNull()
 		{
-			var resolvedPluginType = ((Type) null).AsPlugin<IMessageFactory>();
+			var resolvedPluginType = ((Type) null).AsPlugin<IMessageBodyStreamFactory>();
 
 			resolvedPluginType.Should().BeNull();
 		}
@@ -51,9 +51,9 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		[Fact]
 		public void AsPluginThrowsNothingWhenExpectedRuntimeType()
 		{
-			var type = typeof(ContextualMessageFactory);
+			var type = typeof(ContextualMessageBodyStreamFactory);
 
-			Action(() => type.AsPlugin<IMessageFactory>()).Should().NotThrow();
+			Action(() => type.AsPlugin<IMessageBodyStreamFactory>()).Should().NotThrow();
 		}
 
 		[Fact]
@@ -61,15 +61,15 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		{
 			var type = GetType();
 
-			Action(() => type.AsPlugin<IMessageFactory>()).Should()
+			Action(() => type.AsPlugin<IMessageBodyStreamFactory>()).Should()
 				.Throw<InvalidOperationException>()
-				.WithMessage($"The plugin type '{GetType().AssemblyQualifiedName}' does not support the type '{typeof(IMessageFactory).AssemblyQualifiedName}'.");
+				.WithMessage($"The plugin type '{GetType().AssemblyQualifiedName}' does not support the type '{typeof(IMessageBodyStreamFactory).AssemblyQualifiedName}'.");
 		}
 
 		[Fact]
 		public void OfPluginTypeReturnsNull()
 		{
-			var resolvedPluginType = ((Type) null).OfPluginType<IMessageFactory>();
+			var resolvedPluginType = ((Type) null).OfPluginType<IMessageBodyStreamFactory>();
 
 			resolvedPluginType.Should().BeNull();
 		}
@@ -77,9 +77,9 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		[Fact]
 		public void OfPluginTypeReturnsPluginType()
 		{
-			var type = typeof(ContextualMessageFactory);
+			var type = typeof(ContextualMessageBodyStreamFactory);
 
-			var resolvedPluginType = type.OfPluginType<IMessageFactory>();
+			var resolvedPluginType = type.OfPluginType<IMessageBodyStreamFactory>();
 
 			resolvedPluginType.Should().BeSameAs(type);
 		}
@@ -87,9 +87,9 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		[Fact]
 		public void OfPluginTypeThrowsNothingWhenExpectedRuntimeType()
 		{
-			var type = typeof(ContextualMessageFactory);
+			var type = typeof(ContextualMessageBodyStreamFactory);
 
-			Action(() => type.OfPluginType<IMessageFactory>()).Should().NotThrow();
+			Action(() => type.OfPluginType<IMessageBodyStreamFactory>()).Should().NotThrow();
 		}
 
 		[Fact]
@@ -97,9 +97,9 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		{
 			var type = GetType();
 
-			Action(() => type.OfPluginType<IMessageFactory>()).Should()
+			Action(() => type.OfPluginType<IMessageBodyStreamFactory>()).Should()
 				.Throw<InvalidOperationException>()
-				.WithMessage($"The plugin type '{GetType().AssemblyQualifiedName}' does not support the type '{typeof(IMessageFactory).AssemblyQualifiedName}'.");
+				.WithMessage($"The plugin type '{GetType().AssemblyQualifiedName}' does not support the type '{typeof(IMessageBodyStreamFactory).AssemblyQualifiedName}'.");
 		}
 
 		[Fact]
@@ -107,20 +107,21 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		{
 			var messageMock = new MessageMock();
 
-			var resolvedPluginType = messageMock.Object.ResolvePluginType(BizTalkFactoryProperties.MessageBodyStreamFactoryTypeName, typeof(ConfiguredMessageFactory));
+			var resolvedPluginType = messageMock.Object.ResolvePluginType(BizTalkFactoryProperties.MessageBodyStreamFactoryTypeName, typeof(ConfiguredMessageBodyStreamFactory));
 
-			resolvedPluginType.Should().Be(typeof(ConfiguredMessageFactory));
+			resolvedPluginType.Should().Be(typeof(ConfiguredMessageBodyStreamFactory));
 		}
 
 		[Fact]
 		public void ResolvePluginTypeReturnsContextualPluginType()
 		{
 			var messageMock = new MessageMock();
-			messageMock.Setup(m => m.GetProperty(BizTalkFactoryProperties.MessageBodyStreamFactoryTypeName)).Returns(typeof(ContextualMessageFactory).AssemblyQualifiedName);
+			messageMock.Setup(m => m.GetProperty(BizTalkFactoryProperties.MessageBodyStreamFactoryTypeName))
+				.Returns(typeof(ContextualMessageBodyStreamFactory).AssemblyQualifiedName);
 
-			var resolvedPluginType = messageMock.Object.ResolvePluginType(BizTalkFactoryProperties.MessageBodyStreamFactoryTypeName, typeof(ConfiguredMessageFactory));
+			var resolvedPluginType = messageMock.Object.ResolvePluginType(BizTalkFactoryProperties.MessageBodyStreamFactoryTypeName, typeof(ConfiguredMessageBodyStreamFactory));
 
-			resolvedPluginType.Should().Be(typeof(ContextualMessageFactory));
+			resolvedPluginType.Should().Be(typeof(ContextualMessageBodyStreamFactory));
 		}
 
 		[Fact]
@@ -133,11 +134,11 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 			resolvedPluginType.Should().BeNull();
 		}
 
-		private class ContextualMessageFactory : IMessageFactory
+		private class ContextualMessageBodyStreamFactory : IMessageBodyStreamFactory
 		{
-			#region IMessageFactory Members
+			#region IMessageBodyStreamFactory Members
 
-			public Stream CreateMessage(IBaseMessage message)
+			public Stream Create(IBaseMessage message)
 			{
 				throw new NotSupportedException();
 			}
@@ -145,11 +146,11 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 			#endregion
 		}
 
-		private class ConfiguredMessageFactory : IMessageFactory
+		private class ConfiguredMessageBodyStreamFactory : IMessageBodyStreamFactory
 		{
-			#region IMessageFactory Members
+			#region IMessageBodyStreamFactory Members
 
-			public Stream CreateMessage(IBaseMessage message)
+			public Stream Create(IBaseMessage message)
 			{
 				throw new NotSupportedException();
 			}

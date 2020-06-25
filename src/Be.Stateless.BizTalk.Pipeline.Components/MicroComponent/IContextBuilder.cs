@@ -16,15 +16,12 @@
 
 #endregion
 
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using Microsoft.BizTalk.Message.Interop;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public interface IMessageFactory
+	public interface IContextBuilder
 	{
-		[SuppressMessage("ReSharper", "UnusedParameter.Global", Justification = "Public plugin API.")]
-		Stream CreateMessage(IBaseMessage message);
+		void Execute(IBaseMessageContext context);
 	}
 }

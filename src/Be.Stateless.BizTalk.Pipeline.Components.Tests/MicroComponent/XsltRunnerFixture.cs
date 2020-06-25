@@ -45,7 +45,6 @@ namespace Be.Stateless.BizTalk.MicroComponent
 			using (var streamProbingScope = new ProbeStreamMockingScope())
 			using (var streamTransformingScope = new TransformStreamMockingScope())
 			{
-				// CAUTION! does not call CreateXsltRunner() as this test concerns only XsltRunner and none of its derived types
 				var sut = new XsltRunner();
 				sut.MapType.Should().BeNull();
 				sut.Execute(PipelineContextMock.Object, MessageMock.Object);
@@ -58,20 +57,21 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void EncodingDefaultsToUtf8WithoutSignature()
 		{
-			CreateXsltRunner().Encoding.Should().Be(new UTF8Encoding(false));
+			new XsltRunner().Encoding.Should().Be(new UTF8Encoding(false));
 		}
 
 		[Fact]
 		[SuppressMessage("ReSharper", "PossibleInvalidCastException")]
-		public virtual void ReplacesMessageOriginalDataStreamWithTransformResult()
+		public void ReplacesMessageOriginalDataStreamWithTransformResult()
 		{
 			PipelineContextMock
 				.Setup(m => m.GetDocumentSpecByType("http://schemas.microsoft.com/Edi/EdifactServiceSchema#UNB"))
 				.Returns(SchemaMetadata.For<EdifactServiceSchema.UNB>().DocumentSpec);
 
-			var sut = CreateXsltRunner();
-			sut.Encoding = Encoding.UTF8;
-			sut.MapType = typeof(IdentityTransform);
+			var sut = new XsltRunner {
+				Encoding = Encoding.UTF8,
+				MapType = typeof(IdentityTransform)
+			};
 
 			using (var dataStream = new MemoryStream(Encoding.UTF8.GetBytes("<UNB xmlns='http://schemas.microsoft.com/Edi/EdifactServiceSchema'></UNB>")))
 			using (var transformedStream = dataStream.Transform().Apply(sut.MapType))
@@ -97,15 +97,16 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		}
 
 		[Fact]
-		public virtual void XsltEntailsMessageTypeIsPromoted()
+		public void XsltEntailsMessageTypeIsPromoted()
 		{
 			PipelineContextMock
 				.Setup(m => m.GetDocumentSpecByType("http://schemas.microsoft.com/Edi/EdifactServiceSchema#UNB"))
 				.Returns(SchemaMetadata.For<EdifactServiceSchema.UNB>().DocumentSpec);
 
-			var sut = CreateXsltRunner();
-			sut.Encoding = Encoding.UTF8;
-			sut.MapType = typeof(IdentityTransform);
+			var sut = new XsltRunner {
+				Encoding = Encoding.UTF8,
+				MapType = typeof(IdentityTransform)
+			};
 
 			using (var dataStream = new MemoryStream(Encoding.UTF8.GetBytes("<UNB xmlns='http://schemas.microsoft.com/Edi/EdifactServiceSchema'></UNB>")))
 			{
@@ -118,15 +119,16 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		}
 
 		[Fact]
-		public virtual void XsltEntailsMessageTypeIsPromotedOnlyIfOutputMethodIsXml()
+		public void XsltEntailsMessageTypeIsPromotedOnlyIfOutputMethodIsXml()
 		{
 			PipelineContextMock
 				.Setup(m => m.GetDocumentSpecByType("http://schemas.microsoft.com/Edi/EdifactServiceSchema#UNB"))
 				.Returns(SchemaMetadata.For<EdifactServiceSchema.UNB>().DocumentSpec);
 
-			var sut = CreateXsltRunner();
-			sut.Encoding = Encoding.UTF8;
-			sut.MapType = typeof(AnyToText);
+			var sut = new XsltRunner {
+				Encoding = Encoding.UTF8,
+				MapType = typeof(AnyToText)
+			};
 
 			using (var dataStream = new MemoryStream(Encoding.UTF8.GetBytes("<UNB xmlns='http://schemas.microsoft.com/Edi/EdifactServiceSchema'></UNB>")))
 			{
@@ -139,19 +141,19 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		}
 
 		[Fact]
-		public virtual void XsltFromContextHasPrecedenceOverConfiguredOne()
+		public void XsltFromContextHasPrecedenceOverConfiguredOne()
 		{
 			PipelineContextMock
 				.Setup(m => m.GetDocumentSpecByType("http://schemas.microsoft.com/Edi/EdifactServiceSchema#UNB"))
 				.Returns(SchemaMetadata.For<EdifactServiceSchema.UNB>().DocumentSpec);
 
-			var sut = CreateXsltRunner();
-			sut.Encoding = Encoding.UTF8;
-			sut.MapType = typeof(TransformBase);
+			var sut = new XsltRunner {
+				Encoding = Encoding.UTF8,
+				MapType = typeof(TransformBase)
+			};
 
-			var mapType = typeof(IdentityTransform);
 			using (var dataStream = new MemoryStream(Encoding.UTF8.GetBytes("<UNB xmlns='http://schemas.microsoft.com/Edi/EdifactServiceSchema'></UNB>")))
-			using (var transformedStream = dataStream.Transform().Apply(mapType))
+			using (var transformedStream = dataStream.Transform().Apply(typeof(IdentityTransform)))
 			using (var streamTransformingScope = new TransformStreamMockingScope())
 			{
 				MessageMock.Object.BodyPart.Data = dataStream;
@@ -164,7 +166,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 					.Setup(ts => ts.ExtendWith(MessageMock.Object.Context))
 					.Returns(transformStreamMock.Object);
 				transformStreamMock
-					.Setup(ts => ts.Apply(mapType, sut.Encoding))
+					.Setup(ts => ts.Apply(typeof(IdentityTransform), sut.Encoding))
 					.Returns(transformedStream)
 					.Verifiable();
 
@@ -173,11 +175,6 @@ namespace Be.Stateless.BizTalk.MicroComponent
 				transformStreamMock.Verify(ts => ts.Apply(sut.MapType, sut.Encoding), Times.Never());
 				transformStreamMock.VerifyAll();
 			}
-		}
-
-		protected virtual XsltRunner CreateXsltRunner()
-		{
-			return new XsltRunner();
 		}
 	}
 }

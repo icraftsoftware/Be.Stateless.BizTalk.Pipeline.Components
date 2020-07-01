@@ -16,16 +16,18 @@
 
 #endregion
 
-namespace Be.Stateless.BizTalk.MicroComponent
+using Be.Stateless.BizTalk.MicroComponent;
+
+namespace Be.Stateless.BizTalk
 {
 	/// <summary>
-	/// The time at which a micro component's plugin will be executed. A plugin can take various forms ranging, for instance, from a <see
-	/// cref="IMessageBodyStreamFactory"/> to a <see cref="IContextBuilder"/>.
+	/// The time at which a micro component's plugin will be executed. A plugin can take various forms ranging, for instance, from an <see
+	/// cref="IMessageBodyStreamFactory"/> to an <see cref="IContextBuilder"/>.
 	/// </summary>
 	/// <remarks>
 	/// The execution time can either be <see cref="Immediate"/>, in which case the plugin will be executed as soon as its hosting micro component &#8212;e.g.
 	/// the <see cref="ContextBuilder"/> or the <see cref="MessageBodyStreamFactory"/>&#8212; starts being executed, or <see cref="Deferred"/>, in which case
-	/// its hosting micro component will wait for the message stream to have been exhausted to execute the plugin.
+	/// its hosting micro component will wait for the message stream to be exhausted to execute the plugin.
 	/// </remarks>
 	public enum PluginExecutionTime
 	{

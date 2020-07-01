@@ -31,7 +31,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Common" Version="2.0.20174.23917" />
     <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20098.6585" />
     <PackageReference Include="Be.Stateless.Stream" Version="2.0.20113.40064" />
     <PackageReference Include="Be.Stateless.Xml" Version="2.0.20113.53240" />
@@ -41,6 +40,10 @@
     </PackageReference>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BizTalk.Common\src\Be.Stateless.BizTalk.Common\Be.Stateless.BizTalk.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

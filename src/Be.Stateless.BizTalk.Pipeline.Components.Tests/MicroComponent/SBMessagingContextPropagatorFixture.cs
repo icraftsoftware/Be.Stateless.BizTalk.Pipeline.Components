@@ -131,7 +131,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void MessageTypeIsNotProbedWhenKnown()
 		{
-			using (var probeStreamMockingScope = new ProbeStreamMockingScope())
+			using (var probeStreamMockInjectionScope = new ProbeStreamMockInjectionScope())
 			using (var inputStream = new MemoryStream(Encoding.UTF8.GetBytes("<root xmlns='urn:ns'></root>")))
 			{
 				MessageMock.Object.BodyPart.Data = inputStream;
@@ -141,7 +141,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 				var sut = new SBMessagingContextPropagator();
 				sut.Execute(PipelineContextMock.Object, MessageMock.Object);
 
-				probeStreamMockingScope.Mock.VerifyGet(ps => ps.MessageType, Times.Never());
+				probeStreamMockInjectionScope.Mock.VerifyGet(ps => ps.MessageType, Times.Never());
 			}
 		}
 
@@ -163,7 +163,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void MessageTypeIsProbedWhenUnknown()
 		{
-			using (var probeStreamMockingScope = new ProbeStreamMockingScope())
+			using (var probeStreamMockInjectionScope = new ProbeStreamMockInjectionScope())
 			using (var inputStream = new MemoryStream(Encoding.UTF8.GetBytes("non xml payload")))
 			{
 				MessageMock.Object.BodyPart.Data = inputStream;
@@ -172,7 +172,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 				var sut = new SBMessagingContextPropagator();
 				sut.Execute(PipelineContextMock.Object, MessageMock.Object);
 
-				probeStreamMockingScope.Mock.VerifyGet(ps => ps.MessageType, Times.Once);
+				probeStreamMockInjectionScope.Mock.VerifyGet(ps => ps.MessageType, Times.Once);
 			}
 		}
 

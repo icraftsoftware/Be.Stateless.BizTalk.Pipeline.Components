@@ -16,7 +16,9 @@
 
 #endregion
 
+using System.Runtime.InteropServices;
 using Be.Stateless.BizTalk.Schema;
+using Be.Stateless.BizTalk.Schemas.Xml;
 using FluentAssertions;
 using Microsoft.BizTalk.Component.Interop;
 using Moq;
@@ -27,10 +29,30 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 	public class PipelineContextExtensionsFixture
 	{
 		[Fact]
-		public void GetSchemaMetadataByType()
+		public void GetSchemaMetadataByTypeForKnownSchema()
+		{
+			var schemaMetadata = SchemaMetadata.For<Any>();
+
+			var documentSpecMock = new Mock<IDocumentSpec>();
+			documentSpecMock
+				.Setup(m => m.DocSpecStrongName)
+				.Returns(schemaMetadata.DocumentSpec.DocSpecStrongName);
+
+			var pipelineContextMock = new Mock<IPipelineContext> { DefaultValue = DefaultValue.Mock };
+			pipelineContextMock
+				.Setup(pc => pc.GetDocumentSpecByType(schemaMetadata.MessageType))
+				.Returns(documentSpecMock.Object);
+
+			var metadata = pipelineContextMock.Object.GetSchemaMetadataByType(schemaMetadata.MessageType, false);
+
+			metadata.Should().BeSameAs(schemaMetadata);
+		}
+
+		[Fact]
+		public void GetSchemaMetadataByTypeForString()
 		{
 			// this is an actual odd edge case that has been occurring on a production BTS server but not reproducible
-			// indeed pipelineContext.GetDocumentSpecByType("string") should throw instead of returning this DocSpecStrongName
+			// IMHO pipelineContext.GetDocumentSpecByType("string") should throw instead of returning this DocSpecStrongName
 			var documentSpecMock = new Mock<IDocumentSpec>();
 			documentSpecMock
 				.Setup(m => m.DocSpecStrongName)
@@ -42,6 +64,39 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 				.Returns(documentSpecMock.Object);
 
 			var metadata = pipelineContextMock.Object.GetSchemaMetadataByType("string", false);
+
+			metadata.Should().BeSameAs(SchemaMetadata.Unknown);
+		}
+
+		[Fact]
+		public void GetSchemaMetadataByTypeForUnknownDocSpecStrongName()
+		{
+			var schemaMetadata = SchemaMetadata.For<Any>();
+
+			var documentSpecMock = new Mock<IDocumentSpec>();
+			documentSpecMock
+				.Setup(m => m.DocSpecStrongName)
+				.Returns("Unknown.Type, UnknownAssembly");
+
+			var pipelineContextMock = new Mock<IPipelineContext> { DefaultValue = DefaultValue.Mock };
+			pipelineContextMock
+				.Setup(pc => pc.GetDocumentSpecByType(schemaMetadata.MessageType))
+				.Returns(documentSpecMock.Object);
+
+			var metadata = pipelineContextMock.Object.GetSchemaMetadataByType(schemaMetadata.MessageType, false);
+
+			metadata.Should().BeSameAs(SchemaMetadata.Unknown);
+		}
+
+		[Fact]
+		public void GetSchemaMetadataByTypeForUnknownSchema()
+		{
+			var pipelineContextMock = new Mock<IPipelineContext> { DefaultValue = DefaultValue.Mock };
+			pipelineContextMock
+				.Setup(pc => pc.GetDocumentSpecByType(It.IsAny<string>()))
+				.Throws(new COMException("Finding the document specification by message type failed.", unchecked((int) PipelineContextExtensions.E_SCHEMA_NOT_FOUND)));
+
+			var metadata = pipelineContextMock.Object.GetSchemaMetadataByType("urn:ns#root", false);
 
 			metadata.Should().BeSameAs(SchemaMetadata.Unknown);
 		}

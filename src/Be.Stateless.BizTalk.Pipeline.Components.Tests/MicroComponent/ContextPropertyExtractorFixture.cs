@@ -23,8 +23,9 @@ using Be.Stateless.BizTalk.Component.Extensions;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.Schema;
+using Be.Stateless.BizTalk.Schemas.Xml;
 using Be.Stateless.BizTalk.Unit.MicroComponent;
-using Be.Stateless.BizTalk.Unit.XPath;
+using Be.Stateless.BizTalk.Unit.Schema;
 using Be.Stateless.BizTalk.XPath;
 using Be.Stateless.IO;
 using Be.Stateless.IO.Extensions;
@@ -40,13 +41,17 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void BuildPropertyExtractorCollectionGivesPrecedenceToSchemaExtractorsOverPipelineExtractors()
 		{
-			using (var schemaPropertyExtractorMockingScope = new SchemaPropertyExtractorAnnotationMockingScope())
+			// has to be called before ContextPropertyAnnotationMockInjectionScope overrides SchemaMetadata.For<>() factory method
+			var schemaMetadata = SchemaMetadata.For<Any>();
+
 			using (var inputStream = new MemoryStream(Encoding.UTF8.GetBytes("<root xmlns='urn:ns'></root>")))
+			using (var contextPropertyAnnotationMockInjectionScope = new ContextPropertyAnnotationMockInjectionScope())
 			{
-				schemaPropertyExtractorMockingScope.Extractors = new PropertyExtractorCollection(
+				contextPropertyAnnotationMockInjectionScope.Extractors = new PropertyExtractorCollection(
 					new XPathExtractor(BizTalkFactoryProperties.SenderName.QName, "/letter/*/to", ExtractionMode.Demote),
 					new XPathExtractor(BtsProperties.Operation.QName, "/letter/*/salutations"));
 
+				PipelineContextMock.Setup(pc => pc.GetDocumentSpecByType("urn:ns#root")).Returns(schemaMetadata.DocumentSpec);
 				MessageMock.Object.BodyPart.Data = inputStream;
 				MessageMock.Setup(m => m.GetProperty(BtsProperties.MessageType)).Returns("urn:ns#root");
 
@@ -90,7 +95,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		public void Deserialize()
 		{
 			var xml = $"<mComponent name=\"{typeof(ContextPropertyExtractor).AssemblyQualifiedName}\"><Extractors>"
-				+ $"<s0:Properties precedence=\"pipeline\" xmlns:s0=\"{SchemaAnnotations.NAMESPACE}\" xmlns:s1=\"{BizTalkFactoryProperties.EnvironmentTag.Namespace}\">"
+				+ $"<s0:Properties precedence=\"pipeline\" xmlns:s0=\"{SchemaAnnotationCollection.NAMESPACE}\" xmlns:s1=\"{BizTalkFactoryProperties.EnvironmentTag.Namespace}\">"
 				+ "<s1:EnvironmentTag value=\"environment-tag\" />"
 				+ "</s0:Properties>"
 				+ "</Extractors></mComponent>";
@@ -137,10 +142,12 @@ namespace Be.Stateless.BizTalk.MicroComponent
 				+ "</s1:body>" +
 				"</s1:letter>";
 
-			using (var schemaPropertyExtractorMockingScope = new SchemaPropertyExtractorAnnotationMockingScope())
 			using (var inputStream = new MemoryStream(Encoding.UTF8.GetBytes(content)))
+			using (var contextPropertyAnnotationMockInjectionScope = new ContextPropertyAnnotationMockInjectionScope())
 			{
-				var propertyExtractorMock = new Mock<PropertyExtractor>(BizTalkFactoryProperties.SenderName.QName, ExtractionMode.Clear) { CallBase = true };
+				var propertyExtractorMock = new Mock<PropertyExtractor>(BizTalkFactoryProperties.SenderName.QName, ExtractionMode.Clear) {
+					CallBase = true
+				};
 				var constantExtractorMock = new Mock<ConstantExtractor>(BtsProperties.OutboundTransportLocation.QName, "OutboundTransportLocation", ExtractionMode.Write) {
 					CallBase = true
 				};
@@ -148,7 +155,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 					CallBase = true
 				};
 
-				schemaPropertyExtractorMockingScope.Extractors = new PropertyExtractorCollection(
+				contextPropertyAnnotationMockInjectionScope.Extractors = new PropertyExtractorCollection(
 					propertyExtractorMock.Object,
 					constantExtractorMock.Object
 				);
@@ -223,7 +230,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		{
 			var microPipelineComponentType = typeof(ContextPropertyExtractor);
 			var xml = $"<mComponent name=\"{microPipelineComponentType.AssemblyQualifiedName}\"><Extractors>"
-				+ $"<s0:Properties precedence=\"pipeline\" xmlns:s0=\"{SchemaAnnotations.NAMESPACE}\" xmlns:s1=\"{BizTalkFactoryProperties.EnvironmentTag.Namespace}\">"
+				+ $"<s0:Properties precedence=\"pipeline\" xmlns:s0=\"{SchemaAnnotationCollection.NAMESPACE}\" xmlns:s1=\"{BizTalkFactoryProperties.EnvironmentTag.Namespace}\">"
 				+ "<s1:EnvironmentTag value=\"environment-tag\" />"
 				+ "</s0:Properties>"
 				+ "</Extractors></mComponent>";

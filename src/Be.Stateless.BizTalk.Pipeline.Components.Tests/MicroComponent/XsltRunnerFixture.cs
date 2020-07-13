@@ -42,15 +42,15 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void DoesNothingWhenNoXslt()
 		{
-			using (var streamProbingScope = new ProbeStreamMockingScope())
-			using (var streamTransformingScope = new TransformStreamMockingScope())
+			using (var probeStreamMockInjectionScope = new ProbeStreamMockInjectionScope())
+			using (var transformStreamMockInjectionScope = new TransformStreamMockInjectionScope())
 			{
 				var sut = new XsltRunner();
 				sut.MapType.Should().BeNull();
 				sut.Execute(PipelineContextMock.Object, MessageMock.Object);
 
-				streamProbingScope.Mock.VerifyGet(ps => ps.MessageType, Times.Never());
-				streamTransformingScope.Mock.Verify(ps => ps.Apply(It.IsAny<Type>()), Times.Never());
+				probeStreamMockInjectionScope.Mock.VerifyGet(ps => ps.MessageType, Times.Never());
+				transformStreamMockInjectionScope.Mock.Verify(ps => ps.Apply(It.IsAny<Type>()), Times.Never());
 			}
 		}
 
@@ -75,21 +75,21 @@ namespace Be.Stateless.BizTalk.MicroComponent
 
 			using (var dataStream = new MemoryStream(Encoding.UTF8.GetBytes("<UNB xmlns='http://schemas.microsoft.com/Edi/EdifactServiceSchema'></UNB>")))
 			using (var transformedStream = dataStream.Transform().Apply(sut.MapType))
-			using (var streamTransformingScope = new TransformStreamMockingScope())
+			using (var transformStreamMockInjectionScope = new TransformStreamMockInjectionScope())
 			{
 				MessageMock.Object.BodyPart.Data = dataStream;
 
-				streamTransformingScope.Mock
+				transformStreamMockInjectionScope.Mock
 					.Setup(ts => ts.ExtendWith(MessageMock.Object.Context))
-					.Returns(streamTransformingScope.Mock.Object);
-				streamTransformingScope.Mock
+					.Returns(transformStreamMockInjectionScope.Mock.Object);
+				transformStreamMockInjectionScope.Mock
 					.Setup(ts => ts.Apply(sut.MapType, sut.Encoding))
 					.Returns(transformedStream)
 					.Verifiable();
 
 				sut.Execute(PipelineContextMock.Object, MessageMock.Object);
 
-				streamTransformingScope.Mock.VerifyAll();
+				transformStreamMockInjectionScope.Mock.VerifyAll();
 
 				MessageMock.Object.BodyPart.Data.Should().BeOfType<MarkableForwardOnlyEventingReadStream>();
 				Reflector.GetField((MarkableForwardOnlyEventingReadStream) MessageMock.Object.BodyPart.Data, "m_data").Should().BeSameAs(transformedStream);
@@ -154,14 +154,14 @@ namespace Be.Stateless.BizTalk.MicroComponent
 
 			using (var dataStream = new MemoryStream(Encoding.UTF8.GetBytes("<UNB xmlns='http://schemas.microsoft.com/Edi/EdifactServiceSchema'></UNB>")))
 			using (var transformedStream = dataStream.Transform().Apply(typeof(IdentityTransform)))
-			using (var streamTransformingScope = new TransformStreamMockingScope())
+			using (var transformStreamMockInjectionScope = new TransformStreamMockInjectionScope())
 			{
 				MessageMock.Object.BodyPart.Data = dataStream;
 				MessageMock
 					.Setup(m => m.GetProperty(BizTalkFactoryProperties.MapTypeName))
 					.Returns(typeof(IdentityTransform).AssemblyQualifiedName);
 
-				var transformStreamMock = streamTransformingScope.Mock;
+				var transformStreamMock = transformStreamMockInjectionScope.Mock;
 				transformStreamMock
 					.Setup(ts => ts.ExtendWith(MessageMock.Object.Context))
 					.Returns(transformStreamMock.Object);

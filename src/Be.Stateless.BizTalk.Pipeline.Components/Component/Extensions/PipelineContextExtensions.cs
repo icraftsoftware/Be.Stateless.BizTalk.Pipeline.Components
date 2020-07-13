@@ -19,7 +19,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using Be.Stateless.BizTalk.Extensions;
 using Be.Stateless.BizTalk.Schema;
 using Be.Stateless.Extensions;
 using log4net;
@@ -71,7 +70,7 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 			var schemaType = !docType.IsNullOrEmpty() && pipelineContext.TryGetDocumentSpecByType(docType, out IDocumentSpec documentSpec)
 				? Type.GetType(documentSpec.DocSpecStrongName, false)
 				: null;
-			return schemaType.IsSchema() ? SchemaMetadata.For(schemaType) : SchemaMetadata.Unknown;
+			return SchemaMetadata.For(schemaType);
 		}
 
 		public static bool TryGetDocumentSpecByType(this IPipelineContext pipelineContext, string docType, out IDocumentSpec documentSpec)

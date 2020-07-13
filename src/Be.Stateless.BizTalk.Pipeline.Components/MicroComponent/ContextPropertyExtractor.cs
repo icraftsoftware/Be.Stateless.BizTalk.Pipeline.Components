@@ -24,9 +24,9 @@ using System.Xml.Serialization;
 using Be.Stateless.BizTalk.Component.Extensions;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.MicroComponent.Extensions;
+using Be.Stateless.BizTalk.Schema.Extensions;
 using Be.Stateless.BizTalk.Streaming;
 using Be.Stateless.BizTalk.XPath;
-using Be.Stateless.BizTalk.XPath.Extensions;
 using Be.Stateless.Linq.Extensions;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
@@ -166,13 +166,12 @@ namespace Be.Stateless.BizTalk.MicroComponent
 			set => Extractors = value;
 		}
 
-		[SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Any does not really enumerate.")]
+
 		internal IEnumerable<PropertyExtractor> BuildPropertyExtractorCollection(IPipelineContext pipelineContext, IBaseMessage message)
 		{
 			var messageType = message.GetOrProbeMessageType(pipelineContext);
 			var schemaMetadata = pipelineContext.GetSchemaMetadataByType(messageType, false);
-			var schemaExtractors = schemaMetadata.Annotations.GetExtractors();
-			return schemaExtractors.Union(Extractors);
+			return schemaMetadata.GetExtractors().Union(Extractors);
 		}
 	}
 }

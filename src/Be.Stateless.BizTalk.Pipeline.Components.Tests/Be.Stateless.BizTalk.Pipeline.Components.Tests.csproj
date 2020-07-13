@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Be.Stateless.BizTalk.XUnit" Version="2.0.20195.48694" />
     <PackageReference Include="Be.Stateless.Common" Version="2.0.20113.37694" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -28,8 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BizTalk.Unit\src\Be.Stateless.BizTalk.Unit\Be.Stateless.BizTalk.Unit.csproj" />
-    <ProjectReference Include="..\..\..\BizTalk.XUnit\src\Be.Stateless.BizTalk.XUnit\Be.Stateless.BizTalk.XUnit.csproj" />
     <ProjectReference Include="..\Be.Stateless.BizTalk.Pipeline.Components\Be.Stateless.BizTalk.Pipeline.Components.csproj" />
   </ItemGroup>
 

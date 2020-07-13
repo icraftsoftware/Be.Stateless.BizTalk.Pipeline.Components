@@ -31,7 +31,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Common" Version="2.0.20195.40342" />
+    <PackageReference Include="Be.Stateless.BizTalk.Common" Version="2.0.20195.46772" />
     <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20187.27547" />
     <PackageReference Include="Be.Stateless.Stream" Version="2.0.20113.40064" />
     <PackageReference Include="Be.Stateless.Xml" Version="2.0.20113.53240" />

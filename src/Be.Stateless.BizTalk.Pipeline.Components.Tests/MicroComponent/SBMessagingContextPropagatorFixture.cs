@@ -59,7 +59,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void BrokeredMessageTypeIsPromotedInward()
 		{
-			var messageType = "urn:ns#root";
+			const string messageType = "urn:ns#root";
 			MessageMock.Setup(m => m.GetProperty(BtsProperties.InboundTransportLocation)).Returns("inbound-transport-location");
 			MessageMock.Setup(m => m.GetProperty(BizTalkFactoryProperties.MessageType)).Returns(messageType);
 
@@ -179,7 +179,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[Fact]
 		public void MessageTypeIsPropagatedOutward()
 		{
-			var messageType = "urn:ns#root";
+			const string messageType = "urn:ns#root";
 			MessageMock.Setup(m => m.GetProperty(BtsProperties.OutboundTransportLocation)).Returns("outbound-transport-location");
 			MessageMock.Setup(m => m.GetProperty(BtsProperties.MessageType)).Returns(messageType);
 

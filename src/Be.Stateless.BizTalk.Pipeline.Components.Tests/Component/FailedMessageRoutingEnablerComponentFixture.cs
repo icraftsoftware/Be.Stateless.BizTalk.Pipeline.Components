@@ -16,9 +16,11 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Unit.Component;
 
 namespace Be.Stateless.BizTalk.Component
 {
+	[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "XUnit fixture.")]
 	public class FailedMessageRoutingEnablerComponentFixture : PipelineComponentFixture<FailedMessageRoutingEnablerComponent> { }
 }

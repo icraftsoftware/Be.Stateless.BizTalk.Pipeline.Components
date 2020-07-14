@@ -67,7 +67,7 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 		public static ISchemaMetadata GetSchemaMetadataByType(this IPipelineContext pipelineContext, string docType, bool throwOnError)
 		{
 			if (throwOnError) return pipelineContext.GetSchemaMetadataByType(docType);
-			var schemaType = !docType.IsNullOrEmpty() && pipelineContext.TryGetDocumentSpecByType(docType, out IDocumentSpec documentSpec)
+			var schemaType = !docType.IsNullOrEmpty() && pipelineContext.TryGetDocumentSpecByType(docType, out var documentSpec)
 				? Type.GetType(documentSpec.DocSpecStrongName, false)
 				: null;
 			return SchemaMetadata.For(schemaType);

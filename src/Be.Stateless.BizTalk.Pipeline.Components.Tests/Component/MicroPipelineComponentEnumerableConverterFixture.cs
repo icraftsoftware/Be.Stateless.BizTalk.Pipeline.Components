@@ -278,6 +278,7 @@ namespace Be.Stateless.BizTalk.Component
 
 			#endregion
 
+			[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 			public bool Enabled { get; set; }
 
 			[XmlIgnore]
@@ -304,7 +305,7 @@ namespace Be.Stateless.BizTalk.Component
 
 			#endregion
 
-			[SuppressMessage("ReSharper", "UnusedMember.Global")]
+			[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 			public bool Enabled { get; set; }
 
 			[XmlElement("Translations", Namespace = XmlTranslationSet.NAMESPACE)]

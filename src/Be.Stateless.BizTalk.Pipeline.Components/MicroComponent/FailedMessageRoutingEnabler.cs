@@ -16,7 +16,6 @@
 
 #endregion
 
-using Be.Stateless.BizTalk.Component;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Microsoft.BizTalk.Component.Interop;

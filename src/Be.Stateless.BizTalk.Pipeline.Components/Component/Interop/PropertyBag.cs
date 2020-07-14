@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.Extensions;
 using Microsoft.BizTalk.Component;
 using Microsoft.BizTalk.Component.Interop;
@@ -43,6 +44,7 @@ namespace Be.Stateless.BizTalk.Component.Interop
 		/// <param name="setter">
 		/// The property setter to assign the value read from the <see cref="IPropertyBag"/> bag if not null.
 		/// </param>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static void ReadProperty<T>(this IPropertyBag propertyBag, string name, Action<T> setter) where T : struct
 		{
 			PropertyHelper.ReadPropertyBag(propertyBag, name).IfNotNull(value => setter((T) Enum.Parse(typeof(T), (string) value)));
@@ -77,6 +79,7 @@ namespace Be.Stateless.BizTalk.Component.Interop
 		/// <param name="setter">
 		/// The property setter to assign the value read from the <see cref="IPropertyBag"/> bag if not null.
 		/// </param>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static void ReadProperty(this IPropertyBag propertyBag, string name, Action<int> setter)
 		{
 			PropertyHelper.ReadPropertyBag(propertyBag, name).IfNotNull(value => setter((int) value));
@@ -114,6 +117,7 @@ namespace Be.Stateless.BizTalk.Component.Interop
 		/// <param name="value">
 		/// The <see cref="Enum"/> property value to write to the <see cref="IPropertyBag"/> bag.
 		/// </param>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static void WriteProperty<T>(this IPropertyBag propertyBag, string name, T value) where T : struct
 		{
 			PropertyHelper.WritePropertyBag(propertyBag, name, Convert.ToString(value));
@@ -148,6 +152,7 @@ namespace Be.Stateless.BizTalk.Component.Interop
 		/// <param name="value">
 		/// The property value to write to the <see cref="IPropertyBag"/> bag.
 		/// </param>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static void WriteProperty(this IPropertyBag propertyBag, string name, int value)
 		{
 			PropertyHelper.WritePropertyBag(propertyBag, name, value);

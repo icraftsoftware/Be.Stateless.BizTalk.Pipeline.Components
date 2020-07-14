@@ -16,6 +16,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -80,6 +81,8 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		[XmlElement(typeof(EncodingXmlSerializer))]
 		public Encoding Encoding { get; set; }
 
+		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Public API.")]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public XmlTranslationRequirements Modes { get; set; }
 
 		/// <summary>

@@ -16,12 +16,14 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.BizTalk.Message.Interop;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
 	public interface IContextBuilder
 	{
+		[SuppressMessage("ReSharper", "UnusedParameter.Global", Justification = "Public API.")]
 		void Execute(IBaseMessageContext context);
 	}
 }

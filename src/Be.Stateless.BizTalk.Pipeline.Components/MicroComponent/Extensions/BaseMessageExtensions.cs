@@ -16,6 +16,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Component.Extensions;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
@@ -31,6 +32,7 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 			return message.GetOrProbeMessageType(pipelineContext.ResourceTracker);
 		}
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public static string ProbeMessageType(this IBaseMessage message, IPipelineContext pipelineContext)
 		{
 			return message.ProbeMessageType(pipelineContext.ResourceTracker);
@@ -47,7 +49,7 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		public static void TryProbeAndPromoteMessageType(this IBaseMessage message, IPipelineContext pipelineContext)
 		{
 			var messageType = message.ProbeMessageType(pipelineContext);
-			if (pipelineContext.TryGetDocumentSpecByType(messageType, out IDocumentSpec docSpec))
+			if (pipelineContext.TryGetDocumentSpecByType(messageType, out var docSpec))
 			{
 				message.Promote(BtsProperties.MessageType, docSpec.DocType);
 				message.Promote(BtsProperties.SchemaStrongName, docSpec.DocSpecStrongName);

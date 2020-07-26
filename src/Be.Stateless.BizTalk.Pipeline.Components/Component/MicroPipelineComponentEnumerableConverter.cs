@@ -33,15 +33,18 @@ using Be.Stateless.Xml.Extensions;
 namespace Be.Stateless.BizTalk.Component
 {
 	/// <summary>
-	/// Converts an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s back and forth to an XML <see cref="string"/>.
+	/// Converts an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s back and forth to an XML <see
+	/// cref="string"/>.
 	/// </summary>
 	public class MicroPipelineComponentEnumerableConverter : ExpandableObjectConverter
 	{
 		/// <summary>
-		/// Deserializes an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s from its XML serialization <see cref="string"/>.
+		/// Deserializes an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s from its XML serialization <see
+		/// cref="string"/>.
 		/// </summary>
 		/// <param name="xml">
-		/// A <see cref="string"/> denoting the XML serialization of an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s.
+		/// A <see cref="string"/> denoting the XML serialization of an <see cref="IEnumerable{T}"/> of <see
+		/// cref="IMicroComponent"/>s.
 		/// </param>
 		/// <returns>
 		/// The deserialized <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s.
@@ -74,7 +77,8 @@ namespace Be.Stateless.BizTalk.Component
 		}
 
 		/// <summary>
-		/// Serializes an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s to its XML <see cref="string"/> representation.
+		/// Serializes an <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s to its XML <see cref="string"/>
+		/// representation.
 		/// </summary>
 		/// <param name="components">
 		/// The <see cref="IEnumerable{T}"/> of <see cref="IMicroComponent"/>s to serialize.
@@ -105,7 +109,8 @@ namespace Be.Stateless.BizTalk.Component
 		#region Base Class Member Overrides
 
 		/// <summary>
-		/// Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+		/// Returns whether this converter can convert an object of the given type to the type of this converter, using the
+		/// specified context.
 		/// </summary>
 		/// <returns>
 		/// true if this converter can perform the conversion; otherwise, false.

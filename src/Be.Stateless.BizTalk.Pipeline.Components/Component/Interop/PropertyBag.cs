@@ -172,8 +172,8 @@ namespace Be.Stateless.BizTalk.Component.Interop
 		/// </param>
 		public static void WriteProperty(this IPropertyBag propertyBag, string name, string value)
 		{
-			// writing string.Empty is compliant with native pipeline component and moreover ensures Pipeline DSL will pickup all properties upon generation of
-			// BTP PipelineDocument
+			// writing string.Empty is compliant with native pipeline component and moreover ensures Pipeline DSL will pickup all
+			// properties upon generation of BTP PipelineDocument
 			PropertyHelper.WritePropertyBag(propertyBag, name, value.IsNullOrEmpty() ? string.Empty : value);
 		}
 	}

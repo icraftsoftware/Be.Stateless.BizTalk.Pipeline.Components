@@ -25,7 +25,7 @@ using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.Schema;
 using Be.Stateless.BizTalk.Schemas.Xml;
-using Be.Stateless.BizTalk.Streaming;
+using Be.Stateless.BizTalk.Stream;
 using Be.Stateless.BizTalk.Unit.MicroComponent;
 using Be.Stateless.Text.Extensions;
 using FluentAssertions;
@@ -35,7 +35,7 @@ using static Be.Stateless.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class XmlTranslatorFixture : MicroComponentFixture
+	public class XmlTranslatorFixture : MicroComponentFixture<XmlTranslator>
 	{
 		[Fact]
 		public void BuildXmlTranslationSetWithNoTranslationInContext()

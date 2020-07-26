@@ -29,7 +29,8 @@ using Microsoft.BizTalk.Message.Interop;
 namespace Be.Stateless.BizTalk.Component
 {
 	/// <summary>
-	/// Runs a sequence of micro pipeline components, similarly to what a pipeline would do if the micro pipeline components were regular pipeline components.
+	/// Runs a sequence of micro pipeline components, similarly to what a pipeline would do if the micro pipeline components
+	/// were regular pipeline components.
 	/// </summary>
 	[ComponentCategory(CategoryTypes.CATID_PipelineComponent)]
 	[ComponentCategory(CategoryTypes.CATID_Any)]

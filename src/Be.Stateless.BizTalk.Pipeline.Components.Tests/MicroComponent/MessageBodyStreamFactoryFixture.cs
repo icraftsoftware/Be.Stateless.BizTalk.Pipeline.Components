@@ -24,7 +24,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class MessageBodyStreamFactoryFixture : MicroComponentFixture
+	public class MessageBodyStreamFactoryFixture : MicroComponentFixture<MessageBodyStreamFactory>
 	{
 		[Fact]
 		public void MessageFactoryPluginIsExecuted()
@@ -48,7 +48,7 @@ namespace Be.Stateless.BizTalk.MicroComponent
 
 			#region IMessageBodyStreamFactory Members
 
-			public Stream Create(IBaseMessage message)
+			public System.IO.Stream Create(IBaseMessage message)
 			{
 				return MessageFactoryMock.Object.Create(message);
 			}

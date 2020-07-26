@@ -21,14 +21,14 @@ using System.IO;
 using System.Text;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
-using Be.Stateless.BizTalk.Unit;
 using Be.Stateless.BizTalk.Unit.MicroComponent;
+using Be.Stateless.BizTalk.Unit.Stream;
 using Moq;
 using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class SBMessagingContextPropagatorFixture : MicroComponentFixture
+	public class SBMessagingContextPropagatorFixture : MicroComponentFixture<SBMessagingContextPropagator>
 	{
 		[Fact]
 		public void BizTalkPropertiesAreOnlyPropagatedOutward()

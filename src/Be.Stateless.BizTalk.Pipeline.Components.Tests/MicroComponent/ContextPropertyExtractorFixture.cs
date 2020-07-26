@@ -23,10 +23,10 @@ using Be.Stateless.BizTalk.Component.Extensions;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.Schema;
+using Be.Stateless.BizTalk.Schema.Annotation;
 using Be.Stateless.BizTalk.Schemas.Xml;
 using Be.Stateless.BizTalk.Unit.MicroComponent;
 using Be.Stateless.BizTalk.Unit.Schema;
-using Be.Stateless.BizTalk.XPath;
 using Be.Stateless.IO;
 using Be.Stateless.IO.Extensions;
 using FluentAssertions;
@@ -36,7 +36,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class ContextPropertyExtractorFixture : MicroComponentFixture
+	public class ContextPropertyExtractorFixture : MicroComponentFixture<ContextPropertyExtractor>
 	{
 		[Fact]
 		public void BuildPropertyExtractorCollectionGivesPrecedenceToSchemaExtractorsOverPipelineExtractors()

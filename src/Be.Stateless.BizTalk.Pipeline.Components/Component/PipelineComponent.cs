@@ -116,8 +116,9 @@ namespace Be.Stateless.BizTalk.Component
 		/// An object containing the configuration properties.
 		/// </param>
 		/// <returns>
-		/// The IEnumerator enables the caller to enumerate through a collection of strings containing error messages. These error messages appear as compiler
-		/// error messages. To report successful property validation, the method should return an empty enumerator.
+		/// The IEnumerator enables the caller to enumerate through a collection of strings containing error messages. These
+		/// error messages appear as compiler error messages. To report successful property validation, the method should return
+		/// an empty enumerator.
 		/// </returns>
 		public virtual IEnumerator Validate(object projectSystem)
 		{
@@ -136,7 +137,8 @@ namespace Be.Stateless.BizTalk.Component
 		void IPersistPropertyBag.InitNew() { }
 
 		/// <summary>
-		/// Loads the pipeline component configuration. This base class implementation must be called by derived classes if they override it.
+		/// Loads the pipeline component configuration. This base class implementation must be called by derived classes if they
+		/// override it.
 		/// </summary>
 		/// <param name="propertyBag"></param>
 		/// <param name="errorLog"></param>
@@ -147,7 +149,8 @@ namespace Be.Stateless.BizTalk.Component
 		}
 
 		/// <summary>
-		/// Saves the pipeline component configuration. This base class implementation must be called by derived classes if they override it.
+		/// Saves the pipeline component configuration. This base class implementation must be called by derived classes if they
+		/// override it.
 		/// </summary>
 		/// <param name="propertyBag"></param>
 		/// <param name="clearDirty"></param>
@@ -178,7 +181,8 @@ namespace Be.Stateless.BizTalk.Component
 		protected abstract void Load(IPropertyBag propertyBag);
 
 		/// <summary>
-		/// Saves the pipeline component configuration. This base class implementation must be called by derived classes if they override it.
+		/// Saves the pipeline component configuration. This base class implementation must be called by derived classes if they
+		/// override it.
 		/// </summary>
 		/// <param name="propertyBag"></param>
 		protected abstract void Save(IPropertyBag propertyBag);

@@ -24,7 +24,7 @@ using System.Xml.Serialization;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.MicroComponent.Extensions;
-using Be.Stateless.BizTalk.Streaming.Extensions;
+using Be.Stateless.BizTalk.Stream.Extensions;
 using Be.Stateless.BizTalk.Xml.Xsl.Extensions;
 using Be.Stateless.Xml;
 using log4net;
@@ -41,8 +41,8 @@ namespace Be.Stateless.BizTalk.MicroComponent
 	/// Contrary to maps statically-configured at the receive or send port level, <see cref="XsltRunner"/> allows for:
 	/// <list type="bullet">
 	/// <item>the transform to be dynamically chosen;</item>
-	/// <item>the transform to be executed anywhere in the pipeline. This is particularly interesting, as we can choose to place it before or after an XML
-	/// assembler/disassembler;</item>
+	/// <item>the transform to be executed anywhere in the pipeline. This is particularly interesting, as we can choose to place
+	/// it before or after an XML assembler/disassembler;</item>
 	/// <item>the execution to be conditional;</item>
 	/// <item>arguments to be dynamically supplied to the transform.</item>
 	/// </list>

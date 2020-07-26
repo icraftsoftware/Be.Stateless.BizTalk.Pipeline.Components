@@ -30,7 +30,8 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 	public static class PipelineContextExtensions
 	{
 		/// <summary>
-		/// Returns the <see cref="ISchemaMetadata"/> associated to the XML schema of messages of a given <see cref="DocumentSpec"/> type.
+		/// Returns the <see cref="ISchemaMetadata"/> associated to the XML schema of messages of a given <see
+		/// cref="DocumentSpec"/> type.
 		/// </summary>
 		/// <param name="pipelineContext">
 		/// The pipeline context from which the <see cref="DocumentSpec"/> can be queried.
@@ -49,7 +50,8 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 		}
 
 		/// <summary>
-		/// Returns the <see cref="ISchemaMetadata"/> associated to the XML schema of messages of a given <see cref="DocumentSpec"/> type.
+		/// Returns the <see cref="ISchemaMetadata"/> associated to the XML schema of messages of a given <see
+		/// cref="DocumentSpec"/> type.
 		/// </summary>
 		/// <param name="pipelineContext">
 		/// The pipeline context from which the <see cref="DocumentSpec"/> can be queried.
@@ -58,8 +60,9 @@ namespace Be.Stateless.BizTalk.Component.Extensions
 		/// The <see cref="DocumentSpec"/> type of the messages for which the <see cref="ISchemaMetadata"/> are to be returned.
 		/// </param>
 		/// <param name="throwOnError">
-		/// <c>false</c> to swallow <see cref="COMException"/> and return a <see cref="SchemaMetadata.Unknown"/> should the document specification not to be
-		/// found; it will however be logged as a warning. <c>true</c> to let any exception through.
+		/// <c>false</c> to swallow <see cref="COMException"/> and return a <see cref="SchemaMetadata.Unknown"/> should the
+		/// document specification not to be found; it will however be logged as a warning. <c>true</c> to let any exception
+		/// through.
 		/// </param>
 		/// <returns>
 		/// The <see cref="ISchemaMetadata"/> associated to the XML Schema.

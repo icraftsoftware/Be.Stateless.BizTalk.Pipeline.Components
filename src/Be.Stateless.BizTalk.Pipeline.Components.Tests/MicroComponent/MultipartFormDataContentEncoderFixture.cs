@@ -17,7 +17,7 @@
 #endregion
 
 using System.IO;
-using Be.Stateless.BizTalk.Streaming;
+using Be.Stateless.BizTalk.Stream;
 using Be.Stateless.BizTalk.Unit.MicroComponent;
 using Be.Stateless.IO;
 using FluentAssertions;
@@ -27,7 +27,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class MultipartFormDataContentEncoderFixture : MicroComponentFixture
+	public class MultipartFormDataContentEncoderFixture : MicroComponentFixture<MultipartFormDataContentEncoder>
 	{
 		[Fact]
 		public void ContentBodyPartHasName()

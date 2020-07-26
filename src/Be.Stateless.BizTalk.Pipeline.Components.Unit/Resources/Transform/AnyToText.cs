@@ -18,7 +18,7 @@
 
 using Microsoft.XLANGs.BaseTypes;
 
-namespace Be.Stateless.BizTalk.Unit.Transform
+namespace Be.Stateless.BizTalk.Resources.Transform
 {
 	/// <summary>
 	/// Utility transform that derives from <see cref="TransformBase"/> and outputs text instead of XML.

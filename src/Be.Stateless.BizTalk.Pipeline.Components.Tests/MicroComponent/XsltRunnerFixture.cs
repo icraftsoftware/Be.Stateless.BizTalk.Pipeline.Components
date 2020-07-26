@@ -22,11 +22,11 @@ using System.IO;
 using System.Text;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
+using Be.Stateless.BizTalk.Resources.Transform;
 using Be.Stateless.BizTalk.Schema;
-using Be.Stateless.BizTalk.Streaming.Extensions;
-using Be.Stateless.BizTalk.Unit;
+using Be.Stateless.BizTalk.Stream.Extensions;
 using Be.Stateless.BizTalk.Unit.MicroComponent;
-using Be.Stateless.BizTalk.Unit.Transform;
+using Be.Stateless.BizTalk.Unit.Stream;
 using Be.Stateless.Reflection;
 using FluentAssertions;
 using Microsoft.BizTalk.Edi.BaseArtifacts;
@@ -37,7 +37,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class XsltRunnerFixture : MicroComponentFixture
+	public class XsltRunnerFixture : MicroComponentFixture<XsltRunner>
 	{
 		[Fact]
 		public void DoesNothingWhenNoXslt()

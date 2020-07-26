@@ -17,7 +17,6 @@
 #endregion
 
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using Microsoft.BizTalk.Message.Interop;
 
 namespace Be.Stateless.BizTalk.MicroComponent
@@ -25,6 +24,6 @@ namespace Be.Stateless.BizTalk.MicroComponent
 	public interface IMessageBodyStreamFactory
 	{
 		[SuppressMessage("ReSharper", "UnusedParameter.Global", Justification = "Public API.")]
-		Stream Create(IBaseMessage message);
+		System.IO.Stream Create(IBaseMessage message);
 	}
 }

@@ -26,7 +26,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class ContextBuilderFixture : MicroComponentFixture
+	public class ContextBuilderFixture : MicroComponentFixture<ContextBuilder>
 	{
 		[Fact]
 		public void ContextBuilderPluginExecutionIsDeferred()

@@ -31,10 +31,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Common" Version="2.0.20195.46772" />
-    <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20187.27547" />
-    <PackageReference Include="Be.Stateless.Stream" Version="2.0.20113.40064" />
-    <PackageReference Include="Be.Stateless.Xml" Version="2.0.20113.53240" />
+    <PackageReference Include="Be.Stateless.BizTalk.Abstractions" Version="2.0.20199.24939" />
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging" Version="2.0.20208.28584" />
+    <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20198.42589" />
+    <PackageReference Include="Be.Stateless.BizTalk.Stream" Version="2.0.20208.26023" />
+    <PackageReference Include="Be.Stateless.Stream" Version="2.0.20196.42463" />
+    <PackageReference Include="Be.Stateless.Xml" Version="2.0.20198.24993" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; compile; build; native; analyzers; buildtransitive</IncludeAssets>

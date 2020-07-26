@@ -17,7 +17,6 @@
 #endregion
 
 using System;
-using System.IO;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using FluentAssertions;
@@ -138,7 +137,7 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		{
 			#region IMessageBodyStreamFactory Members
 
-			public Stream Create(IBaseMessage message)
+			public System.IO.Stream Create(IBaseMessage message)
 			{
 				throw new NotSupportedException();
 			}
@@ -150,7 +149,7 @@ namespace Be.Stateless.BizTalk.MicroComponent.Extensions
 		{
 			#region IMessageBodyStreamFactory Members
 
-			public Stream Create(IBaseMessage message)
+			public System.IO.Stream Create(IBaseMessage message)
 			{
 				throw new NotSupportedException();
 			}

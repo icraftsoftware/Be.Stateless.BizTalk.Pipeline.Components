@@ -24,9 +24,9 @@ using System.Xml.Serialization;
 using Be.Stateless.BizTalk.Component.Extensions;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.MicroComponent.Extensions;
+using Be.Stateless.BizTalk.Schema.Annotation;
 using Be.Stateless.BizTalk.Schema.Extensions;
-using Be.Stateless.BizTalk.Streaming;
-using Be.Stateless.BizTalk.XPath;
+using Be.Stateless.BizTalk.Stream;
 using Be.Stateless.Linq.Extensions;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
@@ -36,26 +36,27 @@ using Microsoft.BizTalk.XPath;
 namespace Be.Stateless.BizTalk.MicroComponent
 {
 	/// <summary>
-	/// This component allows to manipulate the message context by either clearing, demoting, writing or promoting property values. These values can either be
-	/// constant or extracted out of an XML message by defining XPath expressions. Notice that these XPath expressions are less restrictive than the
-	/// traditional canonical XPath expressions supported by BizTalk Server; limitations are however still present and relatively strong.
+	/// This component allows to manipulate the message context by either clearing, demoting, writing or promoting property
+	/// values. These values can either be constant or extracted out of an XML message by defining XPath expressions. Notice
+	/// that these XPath expressions are less restrictive than the traditional canonical XPath expressions supported by BizTalk
+	/// Server; limitations are however still present and relatively strong.
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// Most properties to promote or write should be configured directly in the message schemas, and not at the pipeline level using this component's
-	/// configuration. The same XML fragment used to configure these properties can be both embedded directly as annotations in a schema or configured at the
-	/// pipeline level.
+	/// Most properties to promote or write should be configured directly in the message schemas, and not at the pipeline level
+	/// using this component's configuration. The same XML fragment used to configure these properties can be both embedded
+	/// directly as annotations in a schema or configured at the pipeline level.
 	/// </para>
 	/// <para>
 	/// The known limitations on the supported XPath expressions are:
 	/// <list type="bullet">
 	/// <item>
-	/// No namespace prefixes may be used in the XPath queries. If you need to match a specific namespace, a predicate in the form of
-	/// <c>/*[local-name()='element' and namespace-uri()='urn']</c> must be used.
+	/// No namespace prefixes may be used in the XPath queries. If you need to match a specific namespace, a predicate in the
+	/// form of <c>/*[local-name()='element' and namespace-uri()='urn']</c> must be used.
 	/// </item>
 	/// <item>
-	/// Position predicates only work when expressed directly on an element name. Thus <c>/element[1]</c> works, but <c>/*[local-name()='element' and
-	/// position()=1]</c> doesn't.
+	/// Position predicates only work when expressed directly on an element name. Thus <c>/element[1]</c> works, but
+	/// <c>/*[local-name()='element' and position()=1]</c> doesn't.
 	/// </item>
 	/// <item>
 	/// Most XPath functions may not be used.
@@ -63,12 +64,13 @@ namespace Be.Stateless.BizTalk.MicroComponent
 	/// </list>
 	/// </para>
 	/// <para>
-	/// Internally, the component uses the <see cref="XPathMutatorStream"/> from BizTalk, which itself uses the <see cref="XPathReader"/>. The limitations
-	/// thus come from these classes. For useful background information about the implementation, the following resources may be consulted:
+	/// Internally, the component uses the <see cref="XPathMutatorStream"/> from BizTalk, which itself uses the <see
+	/// cref="XPathReader"/>. The limitations thus come from these classes. For useful background information about the
+	/// implementation, the following resources may be consulted:
 	/// <list type="bullet">
 	/// <item>
-	/// <see href="http://www.codit.eu/Blog/post/2010/01/22/The-BizTalk-XPathMutatorStream-pros-and-cons.aspx">The BizTalk XPathMutatorStream: pros and
-	/// cons</see>
+	/// <see href="http://www.codit.eu/Blog/post/2010/01/22/The-BizTalk-XPathMutatorStream-pros-and-cons.aspx">The BizTalk
+	/// XPathMutatorStream: pros and cons</see>
 	/// </item>
 	/// <item>
 	/// <see href="http://bloggingabout.net/blogs/wellink/archive/2006/03/03/11207.aspx">XpathMutatorStream:  Great
@@ -87,32 +89,35 @@ namespace Be.Stateless.BizTalk.MicroComponent
 	/// </list>
 	/// </para>
 	/// <para>
-	/// If the configured XPath expressions lead to multiple matches in the message, only the first match value is taken into account for extraction (i.e.
-	/// write or promote) and other matches are discarded. The component can possibly be slightly enhanced to take a specific match index into account, by
-	/// modifying the <see cref="ReactiveXPathExtractorCollection.OnMatch"/> method. Given the limitations of the component, it could be necessary to change
-	/// its implementation in the future if it cannot meet the new requirements that may arise. The current implementation uses a full streaming approach, and
-	/// the alternate way to do it is using an <see cref="System.Xml.XPath.XPathNavigator"/> in combination with a <see cref="VirtualStream"/>. That would
-	/// allow almost all XPath queries of arbitrary complexity, at the cost of some performance loss.
+	/// If the configured XPath expressions lead to multiple matches in the message, only the first match value is taken into
+	/// account for extraction (i.e. write or promote) and other matches are discarded. The component can possibly be slightly
+	/// enhanced to take a specific match index into account, by modifying the <see
+	/// cref="ReactiveXPathExtractorCollection.OnMatch"/> method. Given the limitations of the component, it could be necessary
+	/// to change its implementation in the future if it cannot meet the new requirements that may arise. The current
+	/// implementation uses a full streaming approach, and the alternate way to do it is using an <see
+	/// cref="System.Xml.XPath.XPathNavigator"/> in combination with a <see cref="VirtualStream"/>. That would allow almost all
+	/// XPath queries of arbitrary complexity, at the cost of some performance loss.
 	/// </para>
 	/// </remarks>
 	/// <example>
 	/// <para>
-	/// Example of an XML fragment configuration that can either be declared at the pipeline-level configuration or directly embedded in a schema, <see
-	/// cref="PropertyExtractorCollection"/>: <code><![CDATA[
+	/// Example of an XML fragment configuration that can either be declared at the pipeline-level configuration or directly
+	/// embedded in a schema, <see cref="PropertyExtractorCollection"/>: <code><![CDATA[
 	/// <san:Properties [extractorPrecedence='pipeline | pipelineOnly | schema | schemaOnly']
 	///                 xmlns:tp='urn:schemas.stateless.be:biztalk:properties:tracking:2012:04'
 	///                 xmlns:san='urn:schemas.stateless.be:biztalk:annotations:2013:01'>
 	///   <tp:Value1 [mode="clear | ignore | promote | write"]
 	///              value="constant-string-literal" />
 	///   <tp:Value2 [mode="clear | demote | ignore | promote | write"]
-	///              [qnameValue="localName | name"] xpath="/*[local-name()='Send']/*[local-name()='Message']/*[local-name()='Subject']" />
+	///              [qnameValue="localName | name"]
+	///              xpath="/*[local-name()='Send']/*[local-name()='Message']/*[local-name()='Subject']" />
 	///   <tp:Value3 mode="clear | ignore" />
 	/// </san:Properties>
 	/// ]]></code>
 	/// </para>
 	/// <para>
-	/// Notice that the <c>san:extractorPrecedence</c> attribute is relevant only when configured at the pipeline level and can only have one of the following
-	/// values: <c>pipeline</c>, <c>pipelineOnly</c>, <c>schema</c>, or <c>schemaOnly</c>.
+	/// Notice that the <c>san:extractorPrecedence</c> attribute is relevant only when configured at the pipeline level and can
+	/// only have one of the following values: <c>pipeline</c>, <c>pipelineOnly</c>, <c>schema</c>, or <c>schemaOnly</c>.
 	/// </para>
 	/// </example>
 	/// <seealso cref="PropertyExtractorCollection"/>
@@ -165,7 +170,6 @@ namespace Be.Stateless.BizTalk.MicroComponent
 			get => new PropertyExtractorCollectionSerializerSurrogate(Extractors);
 			set => Extractors = value;
 		}
-
 
 		internal IEnumerable<PropertyExtractor> BuildPropertyExtractorCollection(IPipelineContext pipelineContext, IBaseMessage message)
 		{

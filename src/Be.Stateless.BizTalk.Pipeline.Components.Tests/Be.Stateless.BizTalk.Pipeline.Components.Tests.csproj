@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.XUnit" Version="2.0.20195.48964" />
-    <PackageReference Include="Be.Stateless.Common" Version="2.0.20113.37694" />
+    <PackageReference Include="AutoFixture" Version="4.13.0" />
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20208.28584" />
+    <PackageReference Include="Be.Stateless.BizTalk.Stream.Unit" Version="2.0.20208.26023" />
+    <PackageReference Include="Be.Stateless.Common" Version="2.0.20196.41234" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,6 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Be.Stateless.BizTalk.Pipeline.Components.Unit\Be.Stateless.BizTalk.Pipeline.Components.Unit.csproj" />
+    <ProjectReference Include="..\Be.Stateless.BizTalk.Pipeline.Components.XUnit\Be.Stateless.BizTalk.Pipeline.Components.XUnit.csproj" />
     <ProjectReference Include="..\Be.Stateless.BizTalk.Pipeline.Components\Be.Stateless.BizTalk.Pipeline.Components.csproj" />
   </ItemGroup>
 

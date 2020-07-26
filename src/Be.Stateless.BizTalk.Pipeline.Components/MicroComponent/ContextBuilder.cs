@@ -22,7 +22,7 @@ using System.Xml.Serialization;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.MicroComponent.Extensions;
-using Be.Stateless.BizTalk.Streaming;
+using Be.Stateless.BizTalk.Stream;
 using Be.Stateless.Extensions;
 using Be.Stateless.Xml;
 using log4net;
@@ -76,7 +76,8 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		public Type BuilderType { get; set; }
 
 		/// <summary>
-		/// The plugin execution mode, either <see cref="PluginExecutionTime.Immediate"/> or <see cref="PluginExecutionTime.Deferred"/>.
+		/// The plugin execution mode, either <see cref="PluginExecutionTime.Immediate"/> or <see
+		/// cref="PluginExecutionTime.Deferred"/>.
 		/// </summary>
 		[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]

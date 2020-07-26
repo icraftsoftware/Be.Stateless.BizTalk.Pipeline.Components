@@ -24,7 +24,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class FailedMessageRoutingEnablerFixture : MicroComponentFixture
+	public class FailedMessageRoutingEnablerFixture : MicroComponentFixture<FailedMessageRoutingEnabler>
 	{
 		[Fact]
 		public void FailedMessageRoutingCanBeDisabled()

@@ -24,7 +24,7 @@ using System.Xml.Serialization;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.MicroComponent.Extensions;
-using Be.Stateless.BizTalk.Streaming;
+using Be.Stateless.BizTalk.Stream;
 using Be.Stateless.Extensions;
 using Be.Stateless.Xml;
 using log4net;
@@ -34,8 +34,8 @@ using Microsoft.BizTalk.Message.Interop;
 namespace Be.Stateless.BizTalk.MicroComponent
 {
 	/// <summary>
-	/// This component moves elements (and optionally attributes) from one namespace to another in the XML stream
-	/// constituting the body of the message.
+	/// This component moves elements (and optionally attributes) from one namespace to another in the XML stream constituting
+	/// the body of the message.
 	/// </summary>
 	public class XmlTranslator : IMicroComponent
 	{

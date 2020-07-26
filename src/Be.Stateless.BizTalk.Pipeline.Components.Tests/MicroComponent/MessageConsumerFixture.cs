@@ -27,7 +27,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.MicroComponent
 {
-	public class MessageConsumerFixture : MicroComponentFixture
+	public class MessageConsumerFixture : MicroComponentFixture<MessageConsumer>
 	{
 		[Fact]
 		public void MessageIsDrainedAndAbsorbed()

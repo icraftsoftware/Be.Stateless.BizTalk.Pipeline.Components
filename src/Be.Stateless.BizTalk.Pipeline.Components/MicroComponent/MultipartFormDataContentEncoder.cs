@@ -18,7 +18,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Message.Extensions;
-using Be.Stateless.BizTalk.Streaming;
+using Be.Stateless.BizTalk.Stream;
 using Be.Stateless.Extensions;
 using log4net;
 using Microsoft.BizTalk.Component.Interop;

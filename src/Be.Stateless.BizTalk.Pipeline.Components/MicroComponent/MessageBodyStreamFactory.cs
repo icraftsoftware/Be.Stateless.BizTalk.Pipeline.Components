@@ -30,8 +30,9 @@ using Microsoft.BizTalk.Message.Interop;
 namespace Be.Stateless.BizTalk.MicroComponent
 {
 	/// <summary>
-	/// Micro pipeline component that replaces the <see cref="Stream"/> of the current message's <see cref="IBaseMessage.BodyPart"/> by a new one whose
-	/// creation is delegated to either a contextual or statically configurable <see cref="IMessageBodyStreamFactory"/> plugin.
+	/// Micro pipeline component that replaces the <see cref="Stream"/> of the current message's <see
+	/// cref="IBaseMessage.BodyPart"/> by a new one whose creation is delegated to either a contextual or statically
+	/// configurable <see cref="IMessageBodyStreamFactory"/> plugin.
 	/// </summary>
 	public class MessageBodyStreamFactory : IMicroComponent
 	{
@@ -48,8 +49,8 @@ namespace Be.Stateless.BizTalk.MicroComponent
 		#endregion
 
 		/// <summary>
-		/// The type of the <see cref="IMessageBodyStreamFactory"/> plugin that will be called to create the <see cref="Stream"/> of the message's <see
-		/// cref="IBaseMessage.BodyPart"/>.
+		/// The type of the <see cref="IMessageBodyStreamFactory"/> plugin that will be called to create the <see cref="Stream"/>
+		/// of the message's <see cref="IBaseMessage.BodyPart"/>.
 		/// </summary>
 		[XmlElement("Factory", typeof(RuntimeTypeXmlSerializer))]
 		public Type FactoryType { get; set; }

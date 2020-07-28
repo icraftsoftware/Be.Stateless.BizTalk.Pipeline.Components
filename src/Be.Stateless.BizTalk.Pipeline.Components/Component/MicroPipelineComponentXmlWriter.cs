@@ -23,7 +23,7 @@ using Be.Stateless.Xml;
 
 namespace Be.Stateless.BizTalk.Component
 {
-	internal class MicroPipelineComponentXmlWriter : XmlWriterWrapper
+	public class MicroPipelineComponentXmlWriter : XmlWriterWrapper
 	{
 		public MicroPipelineComponentXmlWriter(XmlWriter writer, IMicroComponent component) : base(writer)
 		{

@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.13.0" />
-    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20208.28584" />
-    <PackageReference Include="Be.Stateless.BizTalk.Stream.Unit" Version="2.0.20208.26023" />
-    <PackageReference Include="Be.Stateless.Common" Version="2.0.20196.41234" />
-    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20214.59077" />
+    <PackageReference Include="Be.Stateless.BizTalk.Stream.Unit" Version="2.0.20214.58871" />
+    <PackageReference Include="Be.Stateless.Common" Version="2.0.20214.30335" />
+    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

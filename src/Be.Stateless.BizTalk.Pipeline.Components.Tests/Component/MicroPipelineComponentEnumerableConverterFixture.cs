@@ -121,15 +121,15 @@ namespace Be.Stateless.BizTalk.Component
 
 			sut.ConvertTo(list, typeof(string)).Should().Be(
 				"<mComponents>"
-				+ $"<mComponent name=\"{typeof(MicroPipelineComponentDummyOne).AssemblyQualifiedName}\">"
+				+ $"<mComponent name='{typeof(MicroPipelineComponentDummyOne).AssemblyQualifiedName}'>"
 				+ "<Property-One>one</Property-One>"
 				+ "<Property-Two>two</Property-Two>"
 				+ "</mComponent>"
-				+ $"<mComponent name=\"{typeof(MicroPipelineComponentDummyTwo).AssemblyQualifiedName}\">"
+				+ $"<mComponent name='{typeof(MicroPipelineComponentDummyTwo).AssemblyQualifiedName}'>"
 				+ "<Property-Six>six</Property-Six>"
 				+ "<Property-Ten>ten</Property-Ten>"
 				+ "</mComponent>"
-				+ $"<mComponent name=\"{typeof(MicroPipelineComponentDummyTen).AssemblyQualifiedName}\">"
+				+ $"<mComponent name='{typeof(MicroPipelineComponentDummyTen).AssemblyQualifiedName}'>"
 				+ "<Encoding>utf-8 with signature</Encoding>"
 				+ "<Index>10</Index>"
 				+ "<Name>DummyTen</Name>"
@@ -227,12 +227,12 @@ namespace Be.Stateless.BizTalk.Component
 
 			sut.ConvertTo(new IMicroComponent[] { component }, typeof(string)).Should().Be(
 				"<mComponents>"
-				+ $"<mComponent name=\"{typeof(DummyContextPropertyExtractorComponent).AssemblyQualifiedName}\">"
+				+ $"<mComponent name='{typeof(DummyContextPropertyExtractorComponent).AssemblyQualifiedName}'>"
 				+ "<Enabled>true</Enabled>"
 				+ "<Extractors>"
-				+ "<s0:Properties xmlns:s0=\"urn:schemas.stateless.be:biztalk:annotations:2013:01\" xmlns:s1=\"urn\">"
-				+ "<s1:Property1 xpath=\"*/some-node\" />"
-				+ "<s1:Property2 mode=\"promote\" xpath=\"*/other-node\" />"
+				+ "<s0:Properties xmlns:s0='urn:schemas.stateless.be:biztalk:annotations:2013:01' xmlns:s1='urn'>"
+				+ "<s1:Property1 xpath='*/some-node' />"
+				+ "<s1:Property2 mode='promote' xpath='*/other-node' />"
 				+ "</s0:Properties>"
 				+ "</Extractors>"
 				+ "</mComponent>"
@@ -257,11 +257,11 @@ namespace Be.Stateless.BizTalk.Component
 
 			sut.ConvertTo(new IMicroComponent[] { component }, typeof(string)).Should().Be(
 				"<mComponents>"
-				+ $"<mComponent name=\"{typeof(DummyXmlTranslatorComponent).AssemblyQualifiedName}\">"
+				+ $"<mComponent name='{typeof(DummyXmlTranslatorComponent).AssemblyQualifiedName}'>"
 				+ "<Enabled>true</Enabled>"
-				+ "<Translations override=\"false\" xmlns=\"urn:schemas.stateless.be:biztalk:translations:2013:07\">"
-				+ "<NamespaceTranslation matchingPattern=\"sourceUrn1\" replacementPattern=\"urn:test1\" />"
-				+ "<NamespaceTranslation matchingPattern=\"sourceUrn5\" replacementPattern=\"urn:test5\" />"
+				+ "<Translations override='false' xmlns='urn:schemas.stateless.be:biztalk:translations:2013:07'>"
+				+ "<NamespaceTranslation matchingPattern='sourceUrn1' replacementPattern='urn:test1' />"
+				+ "<NamespaceTranslation matchingPattern='sourceUrn5' replacementPattern='urn:test5' />"
 				+ "</Translations>"
 				+ "</mComponent>"
 				+ "</mComponents>");

@@ -93,7 +93,8 @@ namespace Be.Stateless.BizTalk.Component
 			if (!components.Any()) return null;
 
 			using (var stringWriter = new StringWriter())
-			using (var writer = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true }))
+			using (var xmlTextWriter = new XmlTextWriter(stringWriter) { QuoteChar = '\'' })
+			using (var writer = XmlWriter.Create(xmlTextWriter, new XmlWriterSettings { OmitXmlDeclaration = true }))
 			{
 				writer.WriteStartElement(Constants.MICRO_COMPONENT_LIST_ELEMENT_NAME);
 				foreach (var component in components)

@@ -3,22 +3,26 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <RootNamespace>Be.Stateless.BizTalk</RootNamespace>
-    <AssemblyTitle>Be.Stateless.BizTalk.Pipeline.Components.NUnit.Tests</AssemblyTitle>
-    <Description>Unit tests for BizTalk.Factory's micro pipelines and components NUnit-based test library for general purpose BizTalk Server development.</Description>
+    <AssemblyName>Be.Stateless.BizTalk.Pipeline.Components.NUnit.Tests</AssemblyName>
+    <Description>Unit tests for BizTalk.Factory's pipeline components NUnit-based test library for general purpose BizTalk Server development.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
+    <None Include="..\..\.settings\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
+    <PackageReference Include="coverlet.msbuild" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="NUnit" Version="3.13.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

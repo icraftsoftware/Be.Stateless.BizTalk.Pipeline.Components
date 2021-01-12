@@ -26,7 +26,7 @@ using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
 using Moq;
 using Xunit;
-using static Be.Stateless.DelegateFactory;
+using static Be.Stateless.Unit.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Component
 {

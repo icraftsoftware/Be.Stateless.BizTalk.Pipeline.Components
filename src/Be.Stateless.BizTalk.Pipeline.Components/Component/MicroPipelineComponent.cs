@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Be.Stateless.BizTalk.Component.Interop;
 using Be.Stateless.BizTalk.MicroComponent;
@@ -29,8 +29,8 @@ using Microsoft.BizTalk.Message.Interop;
 namespace Be.Stateless.BizTalk.Component
 {
 	/// <summary>
-	/// Runs a sequence of micro pipeline components, similarly to what a pipeline would do if the micro pipeline components
-	/// were regular pipeline components.
+	/// Runs a sequence of micro components, i.e. components implementing <see cref="IMicroComponent"/>, similarly to what a
+	/// regular Microsoft BizTalk Server pipeline would do if the micro components were regular pipeline components.
 	/// </summary>
 	[ComponentCategory(CategoryTypes.CATID_PipelineComponent)]
 	[ComponentCategory(CategoryTypes.CATID_Any)]
@@ -39,7 +39,7 @@ namespace Be.Stateless.BizTalk.Component
 	{
 		public MicroPipelineComponent()
 		{
-			Components = Enumerable.Empty<IMicroComponent>();
+			_microComponent = new MicroPipeline();
 		}
 
 		#region Base Class Member Overrides
@@ -49,13 +49,11 @@ namespace Be.Stateless.BizTalk.Component
 		/// </summary>
 		[Browsable(false)]
 		[Description("Description of the pipeline component.")]
-		public override string Description => "Runs a sequence of micro pipeline components as if they were regular pipeline components.";
+		public override string Description => "Runs a sequence of micro components as if they were regular pipeline components.";
 
 		protected internal override IBaseMessage ExecuteCore(IPipelineContext pipelineContext, IBaseMessage message)
 		{
-			return Components.Aggregate(
-				message,
-				(inputMessage, microPipelineComponent) => microPipelineComponent.Execute(pipelineContext, inputMessage));
+			return _microComponent.Execute(pipelineContext, message);
 		}
 
 		/// <summary>
@@ -64,6 +62,7 @@ namespace Be.Stateless.BizTalk.Component
 		/// <param name="classId">
 		/// Class ID of the component
 		/// </param>
+		[SuppressMessage("Design", "CA1021:Avoid out parameters")]
 		public override void GetClassID(out Guid classId)
 		{
 			classId = _classID;
@@ -75,7 +74,7 @@ namespace Be.Stateless.BizTalk.Component
 		/// <param name="propertyBag">Configuration property bag</param>
 		protected override void Load(IPropertyBag propertyBag)
 		{
-			propertyBag.ReadProperty(nameof(Components), value => Components = MicroPipelineComponentEnumerableConverter.Deserialize(value));
+			propertyBag.ReadProperty(nameof(Components), value => _microComponent.LoadConfiguration(value));
 		}
 
 		/// <summary>
@@ -84,20 +83,25 @@ namespace Be.Stateless.BizTalk.Component
 		/// <param name="propertyBag">Configuration property bag</param>
 		protected override void Save(IPropertyBag propertyBag)
 		{
-			propertyBag.WriteProperty(nameof(Components), MicroPipelineComponentEnumerableConverter.Serialize(Components));
+			propertyBag.WriteProperty(nameof(Components), _microComponent.SaveConfiguration());
 		}
 
 		#endregion
 
 		/// <summary>
-		/// List of micro pipeline components that will be run in sequence by the micro pipeline.
+		/// List of micro components that will be run in sequence by the micro pipeline.
 		/// </summary>
 		[Browsable(true)]
-		[Description("List of micro pipeline components that will be run in sequence by the micro pipeline.")]
-		[TypeConverter(typeof(MicroPipelineComponentEnumerableConverter))]
-		public IEnumerable<IMicroComponent> Components { get; set; }
+		[Description("List of micro components that will be run in sequence by the micro pipeline.")]
+		[TypeConverter(typeof(MicroComponentEnumerableConverter))]
+		public IEnumerable<IMicroComponent> Components
+		{
+			get => _microComponent.Components;
+			set => _microComponent.Components = value;
+		}
 
 		private const string CLASS_ID = "02dd03e8-9509-4799-a196-a8c68e02d933";
 		private static readonly Guid _classID = new Guid(CLASS_ID);
+		private readonly MicroPipeline _microComponent;
 	}
 }

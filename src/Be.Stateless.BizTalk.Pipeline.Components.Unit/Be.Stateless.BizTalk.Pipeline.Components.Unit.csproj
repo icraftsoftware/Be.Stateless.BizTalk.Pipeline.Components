@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <RootNamespace>Be.Stateless.BizTalk</RootNamespace>
-    <AssemblyTitle>Be.Stateless.BizTalk.Pipeline.Components.Unit</AssemblyTitle>
-    <Description>BizTalk.Factory's micro pipelines and components unit test library for general purpose BizTalk Server development.</Description>
+    <AssemblyName>Be.Stateless.BizTalk.Pipeline.Components.Unit</AssemblyName>
+    <Description>BizTalk.Factory's pipeline components unit test library for general purpose BizTalk Server development.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -15,11 +15,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">true</ContinuousIntegrationBuild>
-    <Deterministic>true</Deterministic>
     <GeneratePackageOnBuild Condition=" '$(GeneratePackageOnBuild)' == '' ">false</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
-    <PackageId>$(AssemblyTitle)</PackageId>
+    <PackageId>$(AssemblyName)</PackageId>
     <PackageDescription>$(Description)</PackageDescription>
     <!--<PackageIconUrl>icon url prop</PackageIconUrl>-->
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
@@ -30,25 +28,28 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\$(AssemblyTitle).xml</DocumentationFile>
+    <DocumentationFile>bin\Release\$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.13.0" />
-    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.20224.39655" />
-    <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20198.42589" />
-    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
+    <None Include="..\..\.settings\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.15.0" />
+    <PackageReference Include="Be.Stateless.BizTalk.Messaging.Unit" Version="2.0.21008.36224" />
+    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; compile; build; native; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+    <PackageReference Include="log4net" Version="2.0.12" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Moq" Version="4.15.2" />
   </ItemGroup>
 
   <ItemGroup>

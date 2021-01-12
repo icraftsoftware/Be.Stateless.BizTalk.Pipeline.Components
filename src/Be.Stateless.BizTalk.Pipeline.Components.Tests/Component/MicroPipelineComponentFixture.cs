@@ -21,122 +21,25 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using AutoFixture;
-using AutoFixture.Kernel;
 using Be.Stateless.BizTalk.MicroComponent;
 using Be.Stateless.BizTalk.Unit.Component;
-using FluentAssertions;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
-using Microsoft.BizTalk.PipelineEditor;
-using Moq;
-using Xunit;
 
 namespace Be.Stateless.BizTalk.Component
 {
+	[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "XUnit fixture.")]
 	public class MicroPipelineComponentFixture : PipelineComponentFixture<MicroPipelineComponent>
 	{
-		[Fact]
-		public void ExecuteMicroComponents()
-		{
-			var pipelineContextMock = new Mock<IPipelineContext>();
-			var messageMock1 = new Unit.Message.Mock<IBaseMessage>();
-			var messageMock2 = new Unit.Message.Mock<IBaseMessage>();
-			var messageMock3 = new Unit.Message.Mock<IBaseMessage>();
-
-			var microComponentMockOne = new Mock<IMicroComponent>();
-			microComponentMockOne
-				.Setup(mc => mc.Execute(pipelineContextMock.Object, messageMock1.Object)).Returns(messageMock2.Object)
-				.Verifiable();
-			var microComponentMockTwo = new Mock<IMicroComponent>();
-			microComponentMockTwo
-				.Setup(mc => mc.Execute(pipelineContextMock.Object, messageMock2.Object)).Returns(messageMock3.Object)
-				.Verifiable();
-
-			var sut = new MicroPipelineComponent {
-				Components = new[] {
-					microComponentMockOne.Object,
-					microComponentMockTwo.Object
-				}
-			};
-
-			sut.Execute(pipelineContextMock.Object, messageMock1.Object).Should().BeSameAs(messageMock3.Object);
-
-			microComponentMockOne.VerifyAll();
-			microComponentMockTwo.VerifyAll();
-		}
-
-		[Fact]
-		public void ExecuteNoMicroComponents()
-		{
-			var messageMock = new Unit.Message.Mock<IBaseMessage>();
-
-			var sut = new MicroPipelineComponent();
-
-			sut.Execute(new Mock<IPipelineContext>().Object, messageMock.Object).Should().BeSameAs(messageMock.Object);
-		}
-
-		[Fact]
-		[SuppressMessage("ReSharper", "CoVariantArrayConversion")]
-		public void LoadConfiguration()
-		{
-			var specimenContext = new SpecimenContext(CreateAutoFixture());
-			var microPipelineComponents = new[] {
-				specimenContext.Create<IMicroComponent>(),
-				specimenContext.Create<IMicroComponent>(),
-				specimenContext.Create<IMicroComponent>()
-			};
-
-			var propertyBag = new PropertyBag();
-			object enabled = true;
-			propertyBag.Write("Enabled", ref enabled);
-			object components = MicroPipelineComponentEnumerableConverter.Serialize(microPipelineComponents);
-			propertyBag.Write("Components", ref components);
-
-			var sut = new MicroPipelineComponent();
-			sut.Load(propertyBag, 0);
-
-			sut.Components.Should().BeEquivalentTo(microPipelineComponents);
-		}
-
-		[Fact]
-		public void SaveConfiguration()
-		{
-			var specimenContext = new SpecimenContext(CreateAutoFixture());
-			var microPipelineComponents = new[] {
-				specimenContext.Create<IMicroComponent>(),
-				specimenContext.Create<IMicroComponent>(),
-				specimenContext.Create<IMicroComponent>()
-			};
-
-			var propertyBag = new PropertyBag();
-
-			var sut = new MicroPipelineComponent { Components = microPipelineComponents };
-			sut.Save(propertyBag, true, true);
-
-			propertyBag.Read("Components", out var components, 0);
-			components.Should().Be(MicroPipelineComponentEnumerableConverter.Serialize(microPipelineComponents));
-		}
-
-		static MicroPipelineComponentFixture()
-		{
-			// PipelineComponentFixture<MicroPipelineComponent> assumes and needs the following converter
-			TypeDescriptor.AddAttributes(typeof(IEnumerable<IMicroComponent>), new TypeConverterAttribute(typeof(MicroPipelineComponentEnumerableConverter)));
-		}
-
-		protected override Fixture CreateAutoFixture()
-		{
-			var fixture = new Fixture();
-			fixture.Register<IMicroComponent>(() => fixture.Create<MicroComponentDummyOne>());
-			return fixture;
-		}
+		#region Nested Type: DummyMicroComponent
 
 		[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-		public class MicroComponentDummyOne : IMicroComponent, IEquatable<MicroComponentDummyOne>
+		public class DummyMicroComponent : IMicroComponent, IEquatable<DummyMicroComponent>
 		{
-			#region IEquatable<MicroComponentDummyOne> Members
+			#region IEquatable<DummyMicroComponent> Members
 
 			[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-			public bool Equals(MicroComponentDummyOne other)
+			public bool Equals(DummyMicroComponent other)
 			{
 				return GetType() == other.GetType();
 			}
@@ -157,7 +60,7 @@ namespace Be.Stateless.BizTalk.Component
 			public override bool Equals(object obj)
 			{
 				if (obj is null) return false;
-				return ReferenceEquals(this, obj) || obj.GetType() == GetType() && Equals((MicroComponentDummyOne) obj);
+				return ReferenceEquals(this, obj) || obj.GetType() == GetType() && Equals((DummyMicroComponent) obj);
 			}
 
 			public override int GetHashCode()
@@ -167,5 +70,24 @@ namespace Be.Stateless.BizTalk.Component
 
 			#endregion
 		}
+
+		#endregion
+
+		static MicroPipelineComponentFixture()
+		{
+			// PipelineComponentFixture<MicroPipelineComponent> assumes and needs the following converter
+			TypeDescriptor.AddAttributes(typeof(IEnumerable<IMicroComponent>), new TypeConverterAttribute(typeof(MicroComponentEnumerableConverter)));
+		}
+
+		#region Base Class Member Overrides
+
+		protected override Fixture CreateAutoFixture()
+		{
+			var fixture = new Fixture();
+			fixture.Register<IMicroComponent>(() => fixture.Create<DummyMicroComponent>());
+			return fixture;
+		}
+
+		#endregion
 	}
 }

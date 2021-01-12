@@ -27,7 +27,6 @@ using System.Runtime.InteropServices;
 using AutoFixture;
 using AutoFixture.Kernel;
 using Be.Stateless.BizTalk.Component;
-using Be.Stateless.BizTalk.Component.Extensions;
 using Be.Stateless.BizTalk.Extensions;
 using Be.Stateless.Extensions;
 using Be.Stateless.Linq.Extensions;
@@ -58,6 +57,7 @@ namespace Be.Stateless.BizTalk.Unit.Component
 		/// cref="PipelineComponent"/> property. Properties explicitly qualified by an <see
 		/// cref="BrowsableAttribute">[Browsable(false)]</see> attribute are ignored.
 		/// </remarks>
+		[SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
 		protected virtual IEnumerable<PropertyInfo> ConfigurableProperties
 		{
 			get
@@ -88,6 +88,7 @@ namespace Be.Stateless.BizTalk.Unit.Component
 		/// <see cref="PipelineComponentFixtureBase{T}"/> initialization to be called either by an xUnit fixture's constructor or
 		/// a NUnit fixture's SetUp method.
 		/// </summary>
+		[SuppressMessage("Usage", "CA2201:Do not raise reserved exception types", Justification = "Emulate actual BizTalk runtime.")]
 		protected void Initialize()
 		{
 			MessageMock = new MessageMock { DefaultValue = DefaultValue.Mock };
@@ -98,7 +99,7 @@ namespace Be.Stateless.BizTalk.Unit.Component
 				.Callback<string>(
 					t => throw new COMException(
 						$"Finding the document specification by message type \"{t}\" failed. Verify the schema deployed properly.",
-						unchecked((int) PipelineContextExtensions.E_SCHEMA_NOT_FOUND)));
+						unchecked((int) HResult.ErrorSchemaNotFound)));
 		}
 
 		/// <summary>

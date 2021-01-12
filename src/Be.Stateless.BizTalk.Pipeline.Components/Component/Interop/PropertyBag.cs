@@ -18,6 +18,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Be.Stateless.Extensions;
 using Microsoft.BizTalk.Component;
 using Microsoft.BizTalk.Component.Interop;
@@ -120,7 +121,7 @@ namespace Be.Stateless.BizTalk.Component.Interop
 		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static void WriteProperty<T>(this IPropertyBag propertyBag, string name, T value) where T : struct
 		{
-			PropertyHelper.WritePropertyBag(propertyBag, name, Convert.ToString(value));
+			PropertyHelper.WritePropertyBag(propertyBag, name, Convert.ToString(value, CultureInfo.InvariantCulture));
 		}
 
 		/// <summary>

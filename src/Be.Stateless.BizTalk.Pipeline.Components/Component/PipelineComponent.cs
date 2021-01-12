@@ -77,6 +77,7 @@ namespace Be.Stateless.BizTalk.Component
 		/// <returns>
 		/// The <see cref="IBaseMessage" /> that contains the resulting message.
 		/// </returns>
+		[SuppressMessage("Naming", "CA1725:Parameter names should match base declaration")]
 		public IBaseMessage Execute(IPipelineContext pipelineContext, IBaseMessage message)
 		{
 			try
@@ -129,6 +130,8 @@ namespace Be.Stateless.BizTalk.Component
 
 		#region IPersistPropertyBag Members
 
+		[SuppressMessage("Design", "CA1021:Avoid out parameters")]
+		[SuppressMessage("Naming", "CA1725:Parameter names should match base declaration")]
 		public abstract void GetClassID(out Guid classId);
 
 		/// <summary>

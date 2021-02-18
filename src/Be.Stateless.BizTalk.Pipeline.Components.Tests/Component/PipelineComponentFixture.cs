@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
 using Moq;
 using Xunit;
-using static Be.Stateless.Unit.DelegateFactory;
+using static FluentAssertions.FluentActions;
 
 namespace Be.Stateless.BizTalk.Component
 {
@@ -55,7 +55,7 @@ namespace Be.Stateless.BizTalk.Component
 			sut.Setup(pc => pc.ExecuteCore(PipelineContextMock.Object, MessageMock.Object))
 				.Throws<InvalidOperationException>();
 
-			Action(() => sut.Object.Execute(PipelineContextMock.Object, MessageMock.Object)).Should().Throw<InvalidOperationException>();
+			Invoking(() => sut.Object.Execute(PipelineContextMock.Object, MessageMock.Object)).Should().Throw<InvalidOperationException>();
 		}
 
 		public class PassThruPipelineComponent : PipelineComponent

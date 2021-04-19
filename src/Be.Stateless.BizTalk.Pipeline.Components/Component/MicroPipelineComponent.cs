@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright © 2012 - 2021 François Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -101,7 +101,7 @@ namespace Be.Stateless.BizTalk.Component
 		}
 
 		private const string CLASS_ID = "02dd03e8-9509-4799-a196-a8c68e02d933";
-		private static readonly Guid _classID = new Guid(CLASS_ID);
+		private static readonly Guid _classID = new(CLASS_ID);
 		private readonly MicroPipeline _microComponent;
 	}
 }

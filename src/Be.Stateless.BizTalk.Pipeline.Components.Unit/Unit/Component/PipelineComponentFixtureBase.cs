@@ -88,11 +88,10 @@ namespace Be.Stateless.BizTalk.Unit.Component
 		/// <see cref="PipelineComponentFixtureBase{T}"/> initialization to be called either by an xUnit fixture's constructor or
 		/// a NUnit fixture's SetUp method.
 		/// </summary>
-		[SuppressMessage("Usage", "CA2201:Do not raise reserved exception types", Justification = "Emulate actual BizTalk runtime.")]
 		protected void Initialize()
 		{
-			MessageMock = new MessageMock { DefaultValue = DefaultValue.Mock };
-			PipelineContextMock = new Mock<IPipelineContext> { DefaultValue = DefaultValue.Mock };
+			MessageMock = new() { DefaultValue = DefaultValue.Mock };
+			PipelineContextMock = new() { DefaultValue = DefaultValue.Mock };
 			// default behavior analogous to actual IPipelineContext implementation
 			PipelineContextMock
 				.Setup(pc => pc.GetDocumentSpecByType(It.IsAny<string>()))
@@ -221,8 +220,10 @@ namespace Be.Stateless.BizTalk.Unit.Component
 		/// </summary>
 		protected void VerifyExecuteCoreIsSkippedWhenPipelineComponentIsNotEnabled()
 		{
-			var sut = new Mock<T> { CallBase = true };
-			sut.Object.Enabled = false;
+			var sut = new Mock<T> {
+				CallBase = true,
+				Object = { Enabled = false }
+			};
 
 			var resultMessage = sut.Object.Execute(PipelineContextMock.Object, MessageMock.Object);
 			if (!ReferenceEquals(resultMessage, MessageMock.Object))

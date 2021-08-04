@@ -18,7 +18,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Be.Stateless.BizTalk.Component.Interop;
 using Be.Stateless.BizTalk.MicroComponent;
@@ -37,7 +36,7 @@ namespace Be.Stateless.BizTalk.Component
 	{
 		public FailedMessageRoutingEnablerComponent()
 		{
-			_microComponent = new FailedMessageRoutingEnabler();
+			_microComponent = new();
 		}
 
 		#region Base Class Member Overrides
@@ -60,7 +59,6 @@ namespace Be.Stateless.BizTalk.Component
 		/// <param name="classId">
 		/// Class ID of the component
 		/// </param>
-		[SuppressMessage("Design", "CA1021:Avoid out parameters")]
 		public override void GetClassID(out Guid classId)
 		{
 			classId = _classID;

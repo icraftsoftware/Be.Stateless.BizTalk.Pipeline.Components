@@ -19,9 +19,9 @@
     <IsPackable>true</IsPackable>
     <PackageId>$(AssemblyName)</PackageId>
     <PackageDescription>$(Description)</PackageDescription>
-    <!--<PackageIconUrl>icon url prop</PackageIconUrl>-->
+    <PackageIconUrl>https://github.com/icraftsoftware/Be.Stateless.Build.Scripts/raw/master/nuget.png</PackageIconUrl>
+    <PackageIcon>nuget.png</PackageIcon>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
-    <!--<PackageReleaseNotes>release notes prop</PackageReleaseNotes>-->
     <PackageTags>BizTalk pipeline component</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -33,13 +33,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\.build\nuget.png" Pack="true" PackagePath="" />
     <None Include="..\..\.settings\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.MicroComponents" Version="2.1.22025.28006" />
+    <PackageReference Include="Be.Stateless.BizTalk.Pipeline.MicroComponents" Version="2.1.22143.17879" />
     <PackageReference Include="Be.Stateless.Extensions" Version="2.1.22025.20499" />
-    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.3">
+    <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; compile; build; native; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
